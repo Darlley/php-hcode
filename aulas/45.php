@@ -1,30 +1,70 @@
-<?php 
-    // Métodos Mágicos (coisas que acontecem sem que você veja)
-    // todo metodo mágico começa com __, você usa um objetos e ocorre uma chamada a um metodo toda vez que um objeto é usado
+<?php // teste de conhecimento até a aula 45
 
-    class Endereco {
-        private $logradouro;
-        private $numero;
-        private $cidade;
+    class Pessoa {
+        private $rg;
+        private $cpf;
 
-        // método construtor (o nome da classe até o PHP5 e o __construct no PHP7)
-        public function __construct($logradouro, $numero, $cidade){
-            $this->logradouro = $logradouro;
-            $this->numero = $numero;
-            $this->cidade = $cidade;
-        } // método mágico de instanciação
+        public $nome;
+        public $sexualidade;
 
-        public function __destruct(){
-            var_dump('destruir');
-        } // método mágico de destruição
+        public function __construct( $rg, $cpf, $nome, $sexualidade ) {
+            $this->rg = $rg;
+            $this->cpf = $cpf;
+            $this->nome = $nome;
+            $this->sexualidade = $sexualidade;
+        }
 
-        public function __toString(){
-            return $this->logradouro. ", " . $this-> numero . ", " . $this->cidade;
-        } // método mágico de chamada
+        public static function validar_cpf($cpf): bool{
+            if($cpf == '06775682158'){
+                return true;
+            }
+
+            return false;
+        }
+        public static function validar_rg($rg): bool{
+            if($rg === '2213773'){
+                return true;
+            }
+
+            return false;
+        }
+
+        public function getNome(){
+            return $this->nome;
+        }
+        public function getSexualidade(){
+            return $this->sexualidade;
+        }
+        public function getRG(){
+            return $this->rg;
+        }
+        public function getCPF(){
+            return $this->cpf;
+        }
+
+        public function setNome($nome){
+            $this->nome = $nome;
+        }
+        public function setsexualidade($sexualidade){
+            $this->sexualidade = $sexualidade;
+        }
+        public function setRG($rg){
+            $this->rg = $rg;
+        }
+        public function setCPF($cpf){
+            $validado = Pessoa::validar_cpf($cpf);
+            if($validado) {
+                $this->cpf = $cpf;
+            } else {
+                echo 'CPF INVÀLIDO!';
+            }
+
+        }
     }
 
+    $estudante = new Pessoa('223773', '000-000-000-00', 'Darlley Brito', 'masculino');
 
-    $endereco = new Endereco('Rua Acrópole', 1783, 'Campo Grande, MS');
-    var_dump($endereco);
-    echo '<br>' .$endereco . '<br>';
-    unset($endereco); // chamou destruct
+    var_dump($estudante);
+
+    $estudante->setCPF('06775682158');
+    echo $estudante->getCPF();
