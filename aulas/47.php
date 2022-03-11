@@ -1,4 +1,4 @@
-<?php // Herança ->
+<?php
 
     class Documento {
         private $numero;
@@ -6,23 +6,17 @@
         public function getNumero(){
             return $this->numero;
         }
-
         public function setNumero($numero){
             $this->numero = $numero;
         }
-    };
+    }
 
     class CPF extends Documento {
-
-        public function validar()
-        {
-            $cpf = $this->getNumero();
-            return $cpf;
+        public function validate(){
+            echo $this->getNumero() . 'foi';
         }
-
     }
-    
 
-    $doc = new CPF();
-    $doc->setNumero('06775682158');
-    $doc->validar();
+    $cpf = new CPF();
+    $cpf->setNumero('06775682158');
+    $cpf->validate();
