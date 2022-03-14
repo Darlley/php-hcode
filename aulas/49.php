@@ -1,42 +1,39 @@
-<?php
+<?php 
 
     interface Veiculo {
-        public function acelerar($velocidade);
-        public function frenar($velocidade);
+        public function acelerar($velocidade):int;
+        public function frenar($velocidade):string;
         public function trocarMarcha($marcha);
     }
-    
+
     abstract class Automovel implements Veiculo {
 
-        public function acelerar($velocidade){
-            echo "Acelerou $velocidade" . '<br>';
+        public function acelerar($velocidade):int{
+            return $velocidade;
         }
 
-        public function frenar($velocidade){
-            echo "Freiou $velocidade" . '<br>';
-        }
-        public function trocarMarcha($marcha){
-            echo "$marcha º marcha" . '<br>';
+        public function frenar($velocidade):string{
+            return "$velocidade";
         }
 
-        // um objeto nunca instancia uma classe abstrata diretamente
-        // o bjeto instancia uma classe que extende a classe abstrata
-        // a classe abstrata ja diz quais metodos uma classe tem e o que eles fazem
-    }
-
-    class Fusion extends Automovel {
-        public function empurrar($distancia){
-            echo "Você empurrou o Fusion por $distancia km de distância";
+        public function trocarMarcha($marcha):string{
+            return "$marcha";
         }
     }
 
-    $carro = new Fusion();
-    var_dump($carro);
+    class Fusca extends Automovel {
+        public function empurrar($distancia):int{
+            return $distancia;
+        }
+    }
 
-    $carro->acelerar(40);
-    $carro->trocarMarcha(4);
-    $carro->frenar(15);
-    $carro->trocarMarcha(2);
-    $carro->empurrar(5);
-
-    $carro = new Automovel();
+    $carro = new Fusca();
+    echo $carro->acelerar('20') . '<br>';
+    echo $carro->trocarMarcha('2') . '<br>';
+    echo $carro->acelerar('40') . '<br>';
+    echo $carro->trocarMarcha('4') . '<br>';
+    echo $carro->frenar('40') . '<br>';
+    echo $carro->trocarMarcha('2') . '<br>';
+    echo $carro->frenar('20') . '<br>';
+    echo $carro->trocarMarcha('0') . '<br>';
+    echo $carro->empurrar(5) . '<br>';
