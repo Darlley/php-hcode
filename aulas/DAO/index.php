@@ -6,6 +6,4 @@
     // echo json_encode($usuarios); 
 
     $root = new Usuario();
-    $result = $root->loadById(5);
-    
-    echo $root;
+    var_dump($root->login('estagiario','12345'));

@@ -98,6 +98,36 @@
 
 
         // METODOS
+        public static function getUsersList(){
+            $sql = new Sql('dev_php7','root','123@ldz');
+            return $sql->select("SELECT * FROM tb_usuarios");
+        }
+
+        public static function serachUser($id_user){
+            $sql = new Sql('dev_php7','root','123@ldz');
+            return $sql->select("SELECT * FROM tb_usuarios WHERE id_usuario = $id_user");
+        }
+
+        public function login($login, $password){
+            $sql = new Sql('dev_php7','root','123@ldz');
+            $results = $sql->select("SELECT * FROM tb_usuarios WHERE des_login = :LOGIN AND des_senha = :PASSWORD", array(
+                ":LOGIN"=> $login,
+                ":PASSWORD" => $password
+            ));
+
+            if(count($results) > 0){
+                $row = $results[0];
+                $this->setIdusuario($row['id_usuario']);
+                $this->setDeslogin($row['des_login']);
+                $this->setDessenha($row['des_senha']);
+                $this->setDtcadastro($row['dt_cadastro']);
+            }else{
+                throw new Exception("Login e/ou senha inválidos!");
+            }
+
+            return $results;
+        }
+
         public function loadById($id){
             $this->sql_connection = new SQL('dev_php7','root','123@ldz');
             $result = $this->sql_connection->select("SELECT * FROM tb_usuarios WHERE id_usuario = :ID", array(
@@ -112,6 +142,7 @@
                 $this->setDtcadastro($row['dt_cadastro']);
             }
         }
+
 
         public function __toString(){
             return json_encode(array(
