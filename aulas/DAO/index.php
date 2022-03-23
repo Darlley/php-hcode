@@ -6,4 +6,4 @@
     // echo json_encode($usuarios); 
 
     $root = new Usuario();
-    var_dump($root->login('estagiario','12345'));
+    var_dump($root->delete(5));

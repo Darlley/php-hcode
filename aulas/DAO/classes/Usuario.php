@@ -116,11 +116,7 @@
             ));
 
             if(count($results) > 0){
-                $row = $results[0];
-                $this->setIdusuario($row['id_usuario']);
-                $this->setDeslogin($row['des_login']);
-                $this->setDessenha($row['des_senha']);
-                $this->setDtcadastro($row['dt_cadastro']);
+                $this->setData($results[0]);
             }else{
                 throw new Exception("Login e/ou senha inválidos!");
             }
@@ -128,18 +124,63 @@
             return $results;
         }
 
+        public function insert($login){
+            $sql = new SQL('dev_php7','root','123@ldz');
+            $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+                ":LOGIN" => $this->getDeslogin(),
+                ":PASSWORD" => $this->getDessenha()
+            ));
+
+            if(count($results) > 0){
+                $this->setData($results[0]);
+            }
+        }
+
+        public function update($login, $password)
+        {
+            $this->setDeslogin($login);
+            $this->setDessenha($password);
+
+            $sql = new SQL('dev_php7','root','123@ldz');
+
+            $sql->query("UPDATE tb_usuario SET des_login = :LOGIN, des_senha = :PASSWORD WHERE id_usuario = :ID", array(
+                ':LOGIN' => $this->getDeslogin(),
+                ':PASSWORD' => $this->getDessenha(),
+                ':ID' => $this->getIdusuario()
+            ));
+        }
+
+        public function delete($id)
+        {
+            $this->setIdusuario($id);
+
+            $sql = new SQL('dev_php7','root','123@ldz');
+            $sql->query("DELETE FROM tb_usuarios WHERE id_usuario = :ID", array(
+                ':ID' => $this->getIdusuario()
+            ));
+
+            $this->setIdusuario(0);
+            $this->setDeslogin("");
+            $this->setDessenha("");
+            $this->setDtcadastro(new DateTime());
+
+        }
+
+        public function setData($data){
+            $this->setIdusuario($data['id_usuario']);
+            $this->setDeslogin($data['des_login']);
+            $this->setDessenha($data['des_senha']);
+            $this->setDtcadastro($data['dt_cadastro']);
+        }
+
         public function loadById($id){
             $this->sql_connection = new SQL('dev_php7','root','123@ldz');
-            $result = $this->sql_connection->select("SELECT * FROM tb_usuarios WHERE id_usuario = :ID", array(
+            $results = $this->sql_connection->select("SELECT * FROM tb_usuarios WHERE id_usuario = :ID", array(
                 ":ID" => $id
             ));
 
-            if(count($result) > 0){
-                $row = $result[0];
-                $this->setIdusuario($row['id_usuario']);
-                $this->setDeslogin($row['des_login']);
-                $this->setDessenha($row['des_senha']);
-                $this->setDtcadastro($row['dt_cadastro']);
+            if(count($results) > 0){
+                $this->setData($results[0]);
             }
         }
 
