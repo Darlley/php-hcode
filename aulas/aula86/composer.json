@@ -1,0 +1,21 @@
+{
+    "name": "hcode/composer",
+    "description": "Aula 86 do curso PHP7",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hcode\\Composer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Darlley",
+            "email": "systembrtt@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "monolog/monolog":"1.0.*"
+    }
+}
